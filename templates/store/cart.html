@@ -1,0 +1,16 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Carrito</title></head><body>
+<h1>Tu carrito</h1>
+{% if cart.items.all %}
+<ul>
+{% for it in cart.items.all %}
+  <li>{{ it.producto.nombre }} - {{ it.cantidad }} x {{ it.producto.precio }} = {{ it.subtotal }}</li>
+{% endfor %}
+</ul>
+<p>Total: {{ cart.total }}</p>
+<form action="{% url 'create_order' %}" method="post">{% csrf_token %}
+<button type="submit">Crear orden</button></form>
+{% else %}
+<p>Carrito vacío.</p>
+{% endif %}
+<a href="{% url 'product_list' %}">Seguir comprando</a>
+</body></html>
