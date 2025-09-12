@@ -1,20 +1,82 @@
 {% load static %}
 <!doctype html>
 <html>
-<head><meta charset="utf-8"><title>Catálogo - Artesanías</title></head>
+<head>
+  <meta charset="utf-8">
+  <title>Catálogo - Artesanías</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 20px; }
+    .product-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
+    .product-card { border: 1px solid #ddd; padding: 15px; border-radius: 8px; text-align: center; }
+    .product-image { max-width: 200px; max-height: 200px; object-fit: cover; border-radius: 4px; }
+    .product-name { font-size: 18px; font-weight: bold; margin: 10px 0; }
+    .product-price { font-size: 20px; color: #2c5aa0; font-weight: bold; margin: 10px 0; }
+    .product-stock { color: #666; font-size: 14px; }
+    .add-to-cart-btn { background-color: #2c5aa0; color: white; padding: 8px 16px; border: none; border-radius: 4px; cursor: pointer; }
+    .add-to-cart-btn:hover { background-color: #1e3d6f; }
+    .cart-link { display: inline-block; margin-top: 20px; padding: 10px 20px; background-color: #28a745; color: white; text-decoration: none; border-radius: 4px; }
+    .no-image { width: 200px; height: 200px; background-color: #f0f0f0; display: flex; align-items: center; justify-content: center; color: #666; border-radius: 4px; }
+  </style>
+</head>
 <body>
-<h1>Catálogo</h1>
-<ul>
-{% for p in productos %}
-  <li>
-    <a href="{% url 'product_detail' p.pk %}">{{ p.nombre }}</a> - {{ p.precio }}
+  <h1>🛍️ Catálogo de Artesanías</h1>
+  
+  <!-- Navegación de usuario -->
+  <div style="text-align: right; margin-bottom: 20px; padding: 10px; background-color: #f8f9fa; border-radius: 5px;">
     {% if user.is_authenticated %}
-      - <a href="{% url 'add_to_cart' p.pk %}">Añadir al carrito</a>
+      <span style="color: #2c5aa0; font-weight: bold;">¡Hola, {{ user.username }}!</span>
+      <a href="{% url 'logout' %}" style="margin-left: 15px; color: #dc3545; text-decoration: none;">Cerrar sesión</a>
+    {% else %}
+      <a href="{% url 'login' %}" style="color: #2c5aa0; text-decoration: none; margin-right: 15px;">Iniciar sesión</a>
+      <a href="{% url 'register' %}" style="color: #28a745; text-decoration: none;">Crear cuenta</a>
     {% endif %}
-  </li>
-{% empty %}
-  <li>No hay productos.</li>
-{% endfor %}
-</ul>
+  </div>
+  
+  <!-- Mostrar mensajes -->
+  {% if messages %}
+    <div style="margin-bottom: 20px;">
+      {% for message in messages %}
+        <div style="background-color: #d4edda; color: #155724; padding: 10px; border-radius: 4px; margin-bottom: 10px;">
+          ✅ {{ message }}
+        </div>
+      {% endfor %}
+    </div>
+  {% endif %}
+  
+  <div class="product-grid">
+    {% for p in productos %}
+      <div class="product-card">
+        {% if p.imagen %}
+          <img src="{{ p.imagen.url }}" alt="{{ p.nombre }}" class="product-image">
+        {% else %}
+          <div class="no-image">📷 Sin imagen</div>
+        {% endif %}
+        
+        <div class="product-name">{{ p.nombre }}</div>
+        <div class="product-price">${{ p.precio }}</div>
+        <div class="product-stock">Stock: {{ p.stock }} unidades</div>
+        
+        {% if user.is_authenticated %}
+          <form method="post" action="{% url 'add_to_cart' p.pk %}" style="margin-top: 10px;">
+            {% csrf_token %}
+            <button type="submit" class="add-to-cart-btn">🛒 Añadir al carrito</button>
+          </form>
+        {% else %}
+          <p style="color: #666; font-size: 14px;">Inicia sesión para comprar</p>
+        {% endif %}
+        
+        <a href="{% url 'product_detail' p.pk %}" style="display: block; margin-top: 10px; color: #2c5aa0;">Ver detalles</a>
+      </div>
+    {% empty %}
+      <div style="grid-column: 1 / -1; text-align: center; padding: 40px;">
+        <h2>No hay productos disponibles</h2>
+        <p>Vuelve más tarde para ver nuestros productos de artesanías.</p>
+      </div>
+    {% endfor %}
+  </div>
+  
+  {% if user.is_authenticated %}
+    <a href="{% url 'view_cart' %}" class="cart-link">🛒 Ver carrito</a>
+  {% endif %}
 </body>
 </html>
