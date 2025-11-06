@@ -1,178 +1,53 @@
-<!doctype html>
-<html>
-<head>
-  <meta charset="utf-8">
-  <title>Registro - Artesanías</title>
+{% extends 'base.html' %}
+{% load i18n %}
+{% block title %}{% trans 'Registro' %} - Artesanías{% endblock %}
+{% block extra_head %}
   <style>
-    body { 
-      font-family: Arial, sans-serif; 
-      margin: 0; 
-      padding: 20px; 
-      background-color: #f5f5f5; 
-    }
-    .container { 
-      max-width: 500px; 
-      margin: 0 auto; 
-      background: white; 
-      padding: 30px; 
-      border-radius: 10px; 
-      box-shadow: 0 2px 10px rgba(0,0,0,0.1); 
-    }
-    h1 { 
-      text-align: center; 
-      color: #2c5aa0; 
-      margin-bottom: 30px; 
-    }
-    .form-group { 
-      margin-bottom: 20px; 
-    }
-    label { 
-      display: block; 
-      margin-bottom: 5px; 
-      font-weight: bold; 
-      color: #333; 
-    }
-    input[type="text"], 
-    input[type="password"] { 
-      width: 100%; 
-      padding: 12px; 
-      border: 2px solid #ddd; 
-      border-radius: 5px; 
-      font-size: 16px; 
-      box-sizing: border-box; 
-    }
-    input[type="text"]:focus, 
-    input[type="password"]:focus { 
-      border-color: #2c5aa0; 
-      outline: none; 
-    }
-    .btn { 
-      width: 100%; 
-      padding: 12px; 
-      background-color: #2c5aa0; 
-      color: white; 
-      border: none; 
-      border-radius: 5px; 
-      font-size: 16px; 
-      cursor: pointer; 
-      margin-bottom: 15px; 
-    }
-    .btn:hover { 
-      background-color: #1e3d6f; 
-    }
-    .btn-secondary { 
-      background-color: #6c757d; 
-      text-decoration: none; 
-      display: inline-block; 
-      text-align: center; 
-    }
-    .btn-secondary:hover { 
-      background-color: #545b62; 
-    }
-    .errorlist { 
-      color: #dc3545; 
-      list-style: none; 
-      padding: 0; 
-      margin: 5px 0; 
-    }
-    .errorlist li { 
-      background-color: #f8d7da; 
-      border: 1px solid #f5c6cb; 
-      padding: 8px; 
-      border-radius: 4px; 
-      margin-bottom: 5px; 
-    }
-    .help-text { 
-      font-size: 14px; 
-      color: #666; 
-      margin-top: 5px; 
-    }
-    .login-link { 
-      text-align: center; 
-      margin-top: 20px; 
-    }
-    .login-link a { 
-      color: #2c5aa0; 
-      text-decoration: none; 
-    }
-    .login-link a:hover { 
-      text-decoration: underline; 
-    }
+    .auth-card { max-width: 520px; margin: 0 auto; background:#fff; padding: 30px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.06); }
+    .form-group { margin-bottom: 16px; }
+    label { display:block; margin-bottom:6px; font-weight:bold; color:#333; }
+    input[type="text"], input[type="password"] { width:100%; padding:12px; border:2px solid #ddd; border-radius:6px; font-size:16px; }
+    input[type="text"]:focus, input[type="password"]:focus { border-color:#2c5aa0; outline:none; }
+    .errorlist { color: #dc3545; list-style: none; padding: 0; margin: 6px 0; }
+    .errorlist li { background-color: #f8d7da; border: 1px solid #f5c6cb; padding: 8px; border-radius: 4px; margin-bottom: 5px; }
+    .help-text { font-size: 14px; color: #666; margin-top: 5px; }
+    .btn { width:100%; }
   </style>
-</head>
-<body>
-  <div class="container">
-    <h1>🛍️ Crear Cuenta</h1>
-    
-    <!-- Mostrar mensajes -->
-    {% if messages %}
-      <div style="margin-bottom: 20px;">
-        {% for message in messages %}
-          <div style="background-color: #d4edda; color: #155724; padding: 10px; border-radius: 4px; margin-bottom: 10px;">
-            ✅ {{ message }}
-          </div>
-        {% endfor %}
-      </div>
-    {% endif %}
-    
+{% endblock %}
+{% block content %}
+  <div class="auth-card">
+    <h1 style="text-align:center; color:#2c5aa0; margin-top:0;">🛍️ {% trans 'Crear Cuenta' %}</h1>
     <form method="post">
       {% csrf_token %}
-      
+      {% if request.GET.next %}<input type="hidden" name="next" value="{{ request.GET.next }}">{% endif %}
       <div class="form-group">
-        <label for="{{ form.username.id_for_label }}">Nombre de usuario:</label>
+        <label for="{{ form.username.id_for_label }}">{% trans 'Nombre de usuario' %}</label>
         {{ form.username }}
-        {% if form.username.help_text %}
-          <div class="help-text">{{ form.username.help_text }}</div>
-        {% endif %}
+        {% if form.username.help_text %}<div class="help-text">{{ form.username.help_text }}</div>{% endif %}
         {% if form.username.errors %}
-          <ul class="errorlist">
-            {% for error in form.username.errors %}
-              <li>{{ error }}</li>
-            {% endfor %}
-          </ul>
+          <ul class="errorlist">{% for error in form.username.errors %}<li>{{ error }}</li>{% endfor %}</ul>
         {% endif %}
       </div>
-      
       <div class="form-group">
-        <label for="{{ form.password1.id_for_label }}">Contraseña:</label>
+        <label for="{{ form.password1.id_for_label }}">{% trans 'Contraseña' %}</label>
         {{ form.password1 }}
-        {% if form.password1.help_text %}
-          <div class="help-text">{{ form.password1.help_text }}</div>
-        {% endif %}
+        {% if form.password1.help_text %}<div class="help-text">{{ form.password1.help_text }}</div>{% endif %}
         {% if form.password1.errors %}
-          <ul class="errorlist">
-            {% for error in form.password1.errors %}
-              <li>{{ error }}</li>
-            {% endfor %}
-          </ul>
+          <ul class="errorlist">{% for error in form.password1.errors %}<li>{{ error }}</li>{% endfor %}</ul>
         {% endif %}
       </div>
-      
       <div class="form-group">
-        <label for="{{ form.password2.id_for_label }}">Confirmar contraseña:</label>
+        <label for="{{ form.password2.id_for_label }}">{% trans 'Confirmar contraseña' %}</label>
         {{ form.password2 }}
-        {% if form.password2.help_text %}
-          <div class="help-text">{{ form.password2.help_text }}</div>
-        {% endif %}
+        {% if form.password2.help_text %}<div class="help-text">{{ form.password2.help_text }}</div>{% endif %}
         {% if form.password2.errors %}
-          <ul class="errorlist">
-            {% for error in form.password2.errors %}
-              <li>{{ error }}</li>
-            {% endfor %}
-          </ul>
+          <ul class="errorlist">{% for error in form.password2.errors %}<li>{{ error }}</li>{% endfor %}</ul>
         {% endif %}
       </div>
-      
-      <button type="submit" class="btn">Crear Cuenta</button>
+      <button type="submit" class="btn btn-primary">{% trans 'Crear Cuenta' %}</button>
     </form>
-    
-    <div class="login-link">
-      <p>¿Ya tienes una cuenta? <a href="{% url 'login' %}">Inicia sesión aquí</a></p>
-    </div>
-    
-    <div style="text-align: center; margin-top: 20px;">
-      <a href="{% url 'product_list' %}" class="btn btn-secondary">← Volver al catálogo</a>
+    <div style="text-align:center; margin-top:14px;">
+      <a href="{% url 'login' %}">{% trans 'Ya tengo cuenta' %}</a>
     </div>
   </div>
-</body>
-</html>
+{% endblock %}

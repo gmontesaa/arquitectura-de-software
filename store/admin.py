@@ -1,11 +1,16 @@
 from django.contrib import admin
-from .models import Producto, Carrito, ItemCarrito, Orden, DetalleOrden
+from .models import Producto, Carrito, ItemCarrito, Orden, DetalleOrden, Categoria
 
 @admin.register(Producto)
 class ProductoAdmin(admin.ModelAdmin):
-    list_display = ['nombre', 'precio', 'stock', 'fecha_creacion']
-    list_filter = ['fecha_creacion']
+    list_display = ['nombre', 'categoria', 'precio', 'stock', 'fecha_creacion']
+    list_filter = ['fecha_creacion', 'categoria']
     search_fields = ['nombre', 'descripcion']
+
+@admin.register(Categoria)
+class CategoriaAdmin(admin.ModelAdmin):
+    list_display = ['nombre', 'fecha_creacion']
+    search_fields = ['nombre']
 
 @admin.register(Carrito)
 class CarritoAdmin(admin.ModelAdmin):

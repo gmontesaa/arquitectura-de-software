@@ -1,0 +1,182 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: artesanias\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: en\n"
+
+# Templates (English)
+msgid "Catálogo"
+msgstr "Catalog"
+
+msgid "Catálogo de Artesanías"
+msgstr "Handicrafts Catalog"
+
+msgid "Buscar por nombre..."
+msgstr "Search by name..."
+
+msgid "Todas las categorías"
+msgstr "All categories"
+
+msgid "Más recientes"
+msgstr "Most recent"
+
+msgid "Precio: menor a mayor"
+msgstr "Price: low to high"
+
+msgid "Precio: mayor a menor"
+msgstr "Price: high to low"
+
+msgid "Nombre A–Z"
+msgstr "Name A–Z"
+
+msgid "Nombre Z–A"
+msgstr "Name Z–A"
+
+msgid "Aplicar"
+msgstr "Apply"
+
+msgid "Limpiar"
+msgstr "Clear"
+
+msgid "Categoría"
+msgstr "Category"
+
+msgid "Stock"
+msgstr "Stock"
+
+msgid "unidades"
+msgstr "units"
+
+msgid "Sin stock"
+msgstr "Out of stock"
+
+msgid "Añadir"
+msgstr "Add"
+
+msgid "Ver detalles"
+msgstr "View details"
+
+msgid "Inicia sesión para comprar"
+msgstr "Sign in to purchase"
+
+msgid "No hay productos disponibles"
+msgstr "No products available"
+
+msgid "Vuelve más tarde para ver nuestros productos de artesanías."
+msgstr "Please come back later to see our handicraft products."
+
+msgid "Página"
+msgstr "Page"
+
+msgid "de"
+msgstr "of"
+
+msgid "Siguiente"
+msgstr "Next"
+
+msgid "Último"
+msgstr "Last"
+
+msgid "Ver carrito"
+msgstr "View cart"
+
+msgid "Añadir al carrito"
+msgstr "Add to cart"
+
+msgid "Este producto no está disponible actualmente."
+msgstr "This product is not currently available."
+
+msgid "Descripción"
+msgstr "Description"
+
+msgid "También te puede interesar"
+msgstr "You may also like"
+
+msgid "Volver al catálogo"
+msgstr "Back to catalog"
+
+msgid "Carrito"
+msgstr "Cart"
+
+msgid "Tu Carrito de Compras"
+msgstr "Your Shopping Cart"
+
+msgid "Resumen del Pedido"
+msgstr "Order Summary"
+
+msgid "Total de productos"
+msgstr "Total items"
+
+msgid "Total a pagar"
+msgstr "Total to pay"
+
+msgid "Crear Orden"
+msgstr "Create Order"
+
+msgid "Tu carrito está vacío"
+msgstr "Your cart is empty"
+
+msgid "¡Agrega algunos productos de artesanías para comenzar tu compra!"
+msgstr "Add some handicraft products to start your purchase!"
+
+msgid "Seguir comprando"
+msgstr "Continue shopping"
+
+msgid "Iniciar Sesión"
+msgstr "Sign In"
+
+msgid "Nombre de usuario"
+msgstr "Username"
+
+msgid "Contraseña"
+msgstr "Password"
+
+msgid "Crear cuenta"
+msgstr "Create account"
+
+msgid "Registro"
+msgstr "Register"
+
+msgid "Crear Cuenta"
+msgstr "Create Account"
+
+msgid "Confirmar contraseña"
+msgstr "Confirm password"
+
+msgid "Ya tengo cuenta"
+msgstr "I already have an account"
+
+# Views messages (English)
+msgid "%(name)s está sin stock"
+msgstr "%(name)s is out of stock"
+
+msgid "No hay stock suficiente de %(name)s"
+msgstr "Not enough stock of %(name)s"
+
+msgid "Se agregaron %(qty)s unidad(es) de %(name)s al carrito"
+msgstr "Added %(qty)s unit(s) of %(name)s to the cart"
+
+msgid "Cantidad ajustada a stock disponible (%(stock)s) para %(name)s"
+msgstr "Quantity adjusted to available stock (%(stock)s) for %(name)s"
+
+msgid "Sin stock suficiente para %(name)s. Disponible: %(stock)s"
+msgstr "Insufficient stock for %(name)s. Available: %(stock)s"
+
+msgid "Se eliminó %(name)s del carrito"
+msgstr "Removed %(name)s from the cart"
+
+msgid "¡Cuenta creada exitosamente para %(username)s!"
+msgstr "Account successfully created for %(username)s!"
+
+msgid "¡Bienvenido de vuelta, %(username)s!"
+msgstr "Welcome back, %(username)s!"
+
+msgid "Has cerrado sesión exitosamente."
+msgstr "You have successfully logged out."
+
+msgid "Usuario o contraseña incorrectos."
+msgstr "Incorrect username or password."
+
+

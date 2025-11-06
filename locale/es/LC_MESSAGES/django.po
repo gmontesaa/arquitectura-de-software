@@ -1,0 +1,182 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: artesanias\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: es\n"
+
+# Templates
+msgid "Catálogo"
+msgstr "Catálogo"
+
+msgid "Catálogo de Artesanías"
+msgstr "Catálogo de Artesanías"
+
+msgid "Buscar por nombre..."
+msgstr "Buscar por nombre..."
+
+msgid "Todas las categorías"
+msgstr "Todas las categorías"
+
+msgid "Más recientes"
+msgstr "Más recientes"
+
+msgid "Precio: menor a mayor"
+msgstr "Precio: menor a mayor"
+
+msgid "Precio: mayor a menor"
+msgstr "Precio: mayor a menor"
+
+msgid "Nombre A–Z"
+msgstr "Nombre A–Z"
+
+msgid "Nombre Z–A"
+msgstr "Nombre Z–A"
+
+msgid "Aplicar"
+msgstr "Aplicar"
+
+msgid "Limpiar"
+msgstr "Limpiar"
+
+msgid "Categoría"
+msgstr "Categoría"
+
+msgid "Stock"
+msgstr "Stock"
+
+msgid "unidades"
+msgstr "unidades"
+
+msgid "Sin stock"
+msgstr "Sin stock"
+
+msgid "Añadir"
+msgstr "Añadir"
+
+msgid "Ver detalles"
+msgstr "Ver detalles"
+
+msgid "Inicia sesión para comprar"
+msgstr "Inicia sesión para comprar"
+
+msgid "No hay productos disponibles"
+msgstr "No hay productos disponibles"
+
+msgid "Vuelve más tarde para ver nuestros productos de artesanías."
+msgstr "Vuelve más tarde para ver nuestros productos de artesanías."
+
+msgid "Página"
+msgstr "Página"
+
+msgid "de"
+msgstr "de"
+
+msgid "Siguiente"
+msgstr "Siguiente"
+
+msgid "Último"
+msgstr "Último"
+
+msgid "Ver carrito"
+msgstr "Ver carrito"
+
+msgid "Añadir al carrito"
+msgstr "Añadir al carrito"
+
+msgid "Este producto no está disponible actualmente."
+msgstr "Este producto no está disponible actualmente."
+
+msgid "Descripción"
+msgstr "Descripción"
+
+msgid "También te puede interesar"
+msgstr "También te puede interesar"
+
+msgid "Volver al catálogo"
+msgstr "Volver al catálogo"
+
+msgid "Carrito"
+msgstr "Carrito"
+
+msgid "Tu Carrito de Compras"
+msgstr "Tu Carrito de Compras"
+
+msgid "Resumen del Pedido"
+msgstr "Resumen del Pedido"
+
+msgid "Total de productos"
+msgstr "Total de productos"
+
+msgid "Total a pagar"
+msgstr "Total a pagar"
+
+msgid "Crear Orden"
+msgstr "Crear Orden"
+
+msgid "Tu carrito está vacío"
+msgstr "Tu carrito está vacío"
+
+msgid "¡Agrega algunos productos de artesanías para comenzar tu compra!"
+msgstr "¡Agrega algunos productos de artesanías para comenzar tu compra!"
+
+msgid "Seguir comprando"
+msgstr "Seguir comprando"
+
+msgid "Iniciar Sesión"
+msgstr "Iniciar Sesión"
+
+msgid "Nombre de usuario"
+msgstr "Nombre de usuario"
+
+msgid "Contraseña"
+msgstr "Contraseña"
+
+msgid "Crear cuenta"
+msgstr "Crear cuenta"
+
+msgid "Registro"
+msgstr "Registro"
+
+msgid "Crear Cuenta"
+msgstr "Crear Cuenta"
+
+msgid "Confirmar contraseña"
+msgstr "Confirmar contraseña"
+
+msgid "Ya tengo cuenta"
+msgstr "Ya tengo cuenta"
+
+# Views messages
+msgid "%(name)s está sin stock"
+msgstr "%(name)s está sin stock"
+
+msgid "No hay stock suficiente de %(name)s"
+msgstr "No hay stock suficiente de %(name)s"
+
+msgid "Se agregaron %(qty)s unidad(es) de %(name)s al carrito"
+msgstr "Se agregaron %(qty)s unidad(es) de %(name)s al carrito"
+
+msgid "Cantidad ajustada a stock disponible (%(stock)s) para %(name)s"
+msgstr "Cantidad ajustada a stock disponible (%(stock)s) para %(name)s"
+
+msgid "Sin stock suficiente para %(name)s. Disponible: %(stock)s"
+msgstr "Sin stock suficiente para %(name)s. Disponible: %(stock)s"
+
+msgid "Se eliminó %(name)s del carrito"
+msgstr "Se eliminó %(name)s del carrito"
+
+msgid "¡Cuenta creada exitosamente para %(username)s!"
+msgstr "¡Cuenta creada exitosamente para %(username)s!"
+
+msgid "¡Bienvenido de vuelta, %(username)s!"
+msgstr "¡Bienvenido de vuelta, %(username)s!"
+
+msgid "Has cerrado sesión exitosamente."
+msgstr "Has cerrado sesión exitosamente."
+
+msgid "Usuario o contraseña incorrectos."
+msgstr "Usuario o contraseña incorrectos."
+
+

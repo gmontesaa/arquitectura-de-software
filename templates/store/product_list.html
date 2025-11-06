@@ -1,82 +1,107 @@
-{% load static %}
-<!doctype html>
-<html>
-<head>
-  <meta charset="utf-8">
-  <title>Catálogo - Artesanías</title>
+{% extends 'base.html' %}
+{% load i18n %}
+{% block title %}{% trans 'Catálogo' %} - Artesanías{% endblock %}
+{% block extra_head %}
   <style>
-    body { font-family: Arial, sans-serif; margin: 20px; }
-    .product-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
-    .product-card { border: 1px solid #ddd; padding: 15px; border-radius: 8px; text-align: center; }
-    .product-image { max-width: 200px; max-height: 200px; object-fit: cover; border-radius: 4px; }
+    .product-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
+    .product-card { background:#fff; border: 1px solid #e5e5e5; padding: 15px; border-radius: 10px; text-align: center; box-shadow: 0 2px 6px rgba(0,0,0,0.04); }
+    .product-image { max-width: 200px; max-height: 200px; object-fit: cover; border-radius: 6px; }
     .product-name { font-size: 18px; font-weight: bold; margin: 10px 0; }
     .product-price { font-size: 20px; color: #2c5aa0; font-weight: bold; margin: 10px 0; }
     .product-stock { color: #666; font-size: 14px; }
-    .add-to-cart-btn { background-color: #2c5aa0; color: white; padding: 8px 16px; border: none; border-radius: 4px; cursor: pointer; }
+    .add-to-cart-btn { background-color: #2c5aa0; color: white; padding: 8px 16px; border: none; border-radius: 6px; cursor: pointer; }
     .add-to-cart-btn:hover { background-color: #1e3d6f; }
-    .cart-link { display: inline-block; margin-top: 20px; padding: 10px 20px; background-color: #28a745; color: white; text-decoration: none; border-radius: 4px; }
-    .no-image { width: 200px; height: 200px; background-color: #f0f0f0; display: flex; align-items: center; justify-content: center; color: #666; border-radius: 4px; }
+    .no-image { width: 200px; height: 200px; background-color: #f0f0f0; display: flex; align-items: center; justify-content: center; color: #666; border-radius: 6px; margin: 0 auto; }
   </style>
-</head>
-<body>
-  <h1>🛍️ Catálogo de Artesanías</h1>
+{% endblock %}
+{% block content %}
+  <h1>🛍️ {% trans 'Catálogo de Artesanías' %}</h1>
   
-  <!-- Navegación de usuario -->
-  <div style="text-align: right; margin-bottom: 20px; padding: 10px; background-color: #f8f9fa; border-radius: 5px;">
-    {% if user.is_authenticated %}
-      <span style="color: #2c5aa0; font-weight: bold;">¡Hola, {{ user.username }}!</span>
-      <a href="{% url 'logout' %}" style="margin-left: 15px; color: #dc3545; text-decoration: none;">Cerrar sesión</a>
-    {% else %}
-      <a href="{% url 'login' %}" style="color: #2c5aa0; text-decoration: none; margin-right: 15px;">Iniciar sesión</a>
-      <a href="{% url 'register' %}" style="color: #28a745; text-decoration: none;">Crear cuenta</a>
-    {% endif %}
-  </div>
-  
-  <!-- Mostrar mensajes -->
-  {% if messages %}
-    <div style="margin-bottom: 20px;">
-      {% for message in messages %}
-        <div style="background-color: #d4edda; color: #155724; padding: 10px; border-radius: 4px; margin-bottom: 10px;">
-          ✅ {{ message }}
-        </div>
+  <!-- Búsqueda, filtro por categoría y ordenamiento -->
+  <form method="get" action="" style="margin: 15px 0; display: grid; grid-template-columns: 1fr 220px 220px auto; gap: 10px; align-items: center;">
+    <input type="text" name="q" placeholder="{% trans 'Buscar por nombre...' %}" value="{{ q }}" style="padding: 8px 10px; border: 1px solid #ccc; border-radius: 4px;">
+    <select name="categoria" style="padding: 8px 10px; border: 1px solid #ccc; border-radius: 4px;">
+      <option value="">{% trans 'Todas las categorías' %}</option>
+      {% for c in categorias %}
+        <option value="{{ c.id }}" {% if categoria_seleccionada == c.id %}selected{% endif %}>{{ c.nombre }}</option>
       {% endfor %}
-    </div>
-  {% endif %}
+    </select>
+    <select name="sort" style="padding: 8px 10px; border: 1px solid #ccc; border-radius: 4px;">
+      <option value="recent" {% if sort == 'recent' %}selected{% endif %}>{% trans 'Más recientes' %}</option>
+      <option value="price_asc" {% if sort == 'price_asc' %}selected{% endif %}>{% trans 'Precio: menor a mayor' %}</option>
+      <option value="price_desc" {% if sort == 'price_desc' %}selected{% endif %}>{% trans 'Precio: mayor a menor' %}</option>
+      <option value="name_asc" {% if sort == 'name_asc' %}selected{% endif %}>{% trans 'Nombre A–Z' %}</option>
+      <option value="name_desc" {% if sort == 'name_desc' %}selected{% endif %}>{% trans 'Nombre Z–A' %}</option>
+    </select>
+    <button type="submit" style="padding: 8px 16px; background-color: #2c5aa0; color: white; border: none; border-radius: 4px; cursor: pointer;">{% trans 'Aplicar' %}</button>
+    <a href="{% url 'product_list' %}" style="padding: 8px 12px; background-color: #6c757d; color: white; text-decoration: none; border-radius: 4px; text-align: center;">{% trans 'Limpiar' %}</a>
+  </form>
+  
+  <!-- Navegación de usuario está en header global -->
+  
+  <!-- Los mensajes se muestran en base.html -->
   
   <div class="product-grid">
     {% for p in productos %}
       <div class="product-card">
         {% if p.imagen %}
-          <img src="{{ p.imagen.url }}" alt="{{ p.nombre }}" class="product-image">
+          <img src="{{ p.imagen.url }}" alt="{{ p.nombre }}" class="product-image" loading="lazy" width="200" height="200">
         {% else %}
           <div class="no-image">📷 Sin imagen</div>
         {% endif %}
         
         <div class="product-name">{{ p.nombre }}</div>
+        {% if p.categoria %}
+        <div class="product-stock" style="margin-bottom: 6px;">
+          {% trans 'Categoría' %}: <a href="?categoria={{ p.categoria.id }}&q={{ q }}&sort={{ sort }}" style="color:#2c5aa0;">{{ p.categoria.nombre }}</a>
+        </div>
+        {% endif %}
         <div class="product-price">${{ p.precio }}</div>
-        <div class="product-stock">Stock: {{ p.stock }} unidades</div>
-        
-        {% if user.is_authenticated %}
-          <form method="post" action="{% url 'add_to_cart' p.pk %}" style="margin-top: 10px;">
-            {% csrf_token %}
-            <button type="submit" class="add-to-cart-btn">🛒 Añadir al carrito</button>
-          </form>
+        {% if p.stock > 0 %}
+        <div class="product-stock">{% trans 'Stock' %}: {{ p.stock }} {% trans 'unidades' %}</div>
         {% else %}
-          <p style="color: #666; font-size: 14px;">Inicia sesión para comprar</p>
+        <div class="product-stock" style="color:#dc3545; font-weight:bold;">{% trans 'Sin stock' %}</div>
         {% endif %}
         
-        <a href="{% url 'product_detail' p.pk %}" style="display: block; margin-top: 10px; color: #2c5aa0;">Ver detalles</a>
+        {% if user.is_authenticated %}
+          {% if p.stock > 0 %}
+            <form method="post" action="{% url 'add_to_cart' p.pk %}" style="margin-top: 10px; display:flex; gap:8px; justify-content:center; align-items:center;">
+              {% csrf_token %}
+              <input type="number" name="cantidad" value="1" min="1" max="{{ p.stock }}" style="width:80px; padding:6px; border:1px solid #ccc; border-radius:4px;">
+              <button type="submit" class="add-to-cart-btn">🛒 {% trans 'Añadir' %}</button>
+            </form>
+          {% else %}
+            <p style="color:#dc3545; font-weight:bold;">{% trans 'Sin stock' %}</p>
+          {% endif %}
+        {% else %}
+          <p style="color: #666; font-size: 14px;">{% trans 'Inicia sesión para comprar' %}</p>
+        {% endif %}
+        
+        <a href="{% url 'product_detail' p.pk %}?next={{ request.get_full_path|urlencode }}" style="display: block; margin-top: 10px; color: #2c5aa0;">{% trans 'Ver detalles' %}</a>
       </div>
     {% empty %}
       <div style="grid-column: 1 / -1; text-align: center; padding: 40px;">
-        <h2>No hay productos disponibles</h2>
-        <p>Vuelve más tarde para ver nuestros productos de artesanías.</p>
+        <h2>{% trans 'No hay productos disponibles' %}</h2>
+        <p>{% trans 'Vuelve más tarde para ver nuestros productos de artesanías.' %}</p>
       </div>
     {% endfor %}
   </div>
   
-  {% if user.is_authenticated %}
-    <a href="{% url 'view_cart' %}" class="cart-link">🛒 Ver carrito</a>
+  {% if page_obj %}
+  <div style="margin-top: 18px; display:flex; justify-content:center; gap:8px;">
+    {% if page_obj.has_previous %}
+      <a href="?page=1&q={{ q }}&categoria={{ categoria_seleccionada }}&sort={{ sort }}" style="padding:8px 12px; border:1px solid #ccc; border-radius:4px; text-decoration:none;">« Primero</a>
+      <a href="?page={{ page_obj.previous_page_number }}&q={{ q }}&categoria={{ categoria_seleccionada }}&sort={{ sort }}" style="padding:8px 12px; border:1px solid #ccc; border-radius:4px; text-decoration:none;">‹ Anterior</a>
+    {% endif %}
+    <span style="padding:8px 12px; border:1px solid #ccc; border-radius:4px; background:#f8f9fa;">{% trans 'Página' %} {{ page_obj.number }} {% trans 'de' %} {{ page_obj.paginator.num_pages }}</span>
+    {% if page_obj.has_next %}
+      <a href="?page={{ page_obj.next_page_number }}&q={{ q }}&categoria={{ categoria_seleccionada }}&sort={{ sort }}" style="padding:8px 12px; border:1px solid #ccc; border-radius:4px; text-decoration:none;">{% trans 'Siguiente' %} ›</a>
+      <a href="?page={{ page_obj.paginator.num_pages }}&q={{ q }}&categoria={{ categoria_seleccionada }}&sort={{ sort }}" style="padding:8px 12px; border:1px solid #ccc; border-radius:4px; text-decoration:none;">{% trans 'Último' %} »</a>
+    {% endif %}
+  </div>
   {% endif %}
-</body>
-</html>
+  
+  {% if user.is_authenticated %}
+    <a href="{% url 'view_cart' %}?next={{ request.get_full_path|urlencode }}" class="btn btn-primary" style="margin-top:16px; display:inline-block;">🛒 {% trans 'Ver carrito' %}</a>
+  {% endif %}
+{% endblock %}
