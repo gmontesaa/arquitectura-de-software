@@ -7,6 +7,8 @@ from django.db import transaction
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.contrib import messages
 from django.utils.translation import gettext as _
+import requests
+from .product_loader import ApiProductLoader, HardcodedProductLoader
 
 def product_list(request):
     q = request.GET.get('q', '').strip()
@@ -34,6 +36,7 @@ def product_list(request):
     except EmptyPage:
         productos_page = paginator.page(paginator.num_pages)
     categorias = Categoria.objects.all().order_by('nombre')
+    clima = get_medellin_weather()
     contexto = {
         'productos': productos_page,
         'q': q,
@@ -41,12 +44,14 @@ def product_list(request):
         'categoria_seleccionada': int(categoria_id) if categoria_id else None,
         'sort': sort,
         'page_obj': productos_page,
+        'clima': clima,
     }
     return render(request, 'store/product_list.html', contexto)
 
 def product_detail(request, pk):
     producto = get_object_or_404(Producto, pk=pk)
     relacionados = Producto.objects.none()
+    clima = get_medellin_weather()
     if producto.categoria_id:
         relacionados = (Producto.objects
                          .filter(categoria_id=producto.categoria_id)
@@ -55,12 +60,19 @@ def product_detail(request, pk):
     contexto = {
         'producto': producto,
         'relacionados': relacionados,
+        'clima': clima,
     }
     return render(request, 'store/product_detail.html', contexto)
 
 def get_or_create_cart(user):
     cart, created = Carrito.objects.get_or_create(usuario=user)
     return cart
+
+def pago_ficticio(request):
+    if request.method == "POST":
+        # Simula el pago exitoso
+        return render(request, "store/pago.html", {"exito": True})
+    return render(request, "store/pago.html", {"exito": False})
 
 @login_required
 def add_to_cart(request, pk):
@@ -207,3 +219,37 @@ def user_logout(request):
     logout(request)
     messages.info(request, _('Has cerrado sesión exitosamente.'))
     return redirect('product_list')
+
+def external_products(request):
+    url = 'URL_DEL_SERVICIO_EXTERNO'
+    try:
+        response = requests.get(url, timeout=5)
+        response.raise_for_status()
+        data = response.json()
+        productos = data.get('results', [])
+    except Exception as e:
+        productos = []
+        messages.error(request, f'Error al consumir el servicio externo: {e}')
+    return render(request, 'store/external_products.html', {'productos': productos})
+
+def cargar_productos(request):
+    # Cambia aquí la implementación según la fuente deseada
+    loader = HardcodedProductLoader()  # O ApiProductLoader()
+    productos = loader.load_products()
+    return render(request, "store/productos_externos.html", {"productos": productos})
+
+def get_medellin_weather():
+    api_key = '6401c6a1e707c70cb4992b3391a366e9'
+    url = f'https://api.openweathermap.org/data/2.5/weather?q=Medellin,CO&appid={api_key}&units=metric&lang=es'
+    try:
+        response = requests.get(url, timeout=5)
+        response.raise_for_status()
+        data = response.json()
+        clima = {
+            'temp': data['main']['temp'],
+            'desc': data['weather'][0]['description'].capitalize(),
+            'icon': data['weather'][0]['icon'],
+        }
+    except Exception:
+        clima = None
+    return clima

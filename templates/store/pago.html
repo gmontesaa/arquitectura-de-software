@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Pasarela de Pago Ficticia</h2>
+{% if exito %}
+    <p>¡Pago realizado con éxito! Gracias por tu compra.</p>
+{% else %}
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit">Pagar ahora</button>
+    </form>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Productos Externos</h2>
+<ul>
+    {% for p in productos %}
+        <li>
+            {{ p.nombre }} - ${{ p.precio }} 
+            {% if p.imagen_url %}
+                <img src="{{ p.imagen_url }}" alt="{{ p.nombre }}" width="100">
+            {% endif %}
+        </li>
+    {% empty %}
+        <li>No hay productos externos disponibles.</li>
+    {% endfor %}
+</ul>
+{% endblock %}

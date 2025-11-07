@@ -34,6 +34,13 @@
 </head>
 <body>
   <header>
+    {% if clima %}
+    <div style="background:#e0f7fa;padding:10px;text-align:center;">
+        <strong>Clima en Medellín:</strong>
+        {{ clima.temp }}°C, {{ clima.desc }}
+        <img src="https://openweathermap.org/img/wn/{{ clima.icon }}.png" alt="icono clima">
+    </div>
+    {% endif %}
     <div class="container nav">
       <a class="brand" href="{% url 'product_list' %}">Artesanías</a>
       <nav class="nav-links">
